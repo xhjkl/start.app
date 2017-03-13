@@ -1,0 +1,37 @@
+{
+  "name": "start",
+  "version": "0.0.1",
+  "description": "neatly packaged best practices and opinions",
+  "main": "main.js",
+  "scripts": {
+    "build-js": "webpack",
+    "build-css": "lessc style/main.less static/style.css",
+    "makedb": "dropdb start && createdb start && psql -1 --dbname=start --file='./server/Schema.sql'",
+    "test": "jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "."
+  },
+  "keywords": [
+    "template"
+  ],
+  "dependencies": {
+    "babel-preset-env": "1",
+    "babel-register": "6",
+    "body-parser": "1",
+    "cookie-parser": "1",
+    "dotenv": "4",
+    "express": "4",
+    "express-session": "^1.15.1",
+    "passport": "^0.3",
+    "passport-github": "^1.1.0",
+    "passport-twitter": "^1.0.4"
+  },
+  "babel": {
+    "presets": [["env", {"exclude": ["transform-regenerator"]}]]
+  },
+  "author": "xhjkl",
+  "license": "UNLICENSED",
+  "private": true
+}
