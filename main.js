@@ -28,8 +28,9 @@ app.disable('x-powered-by');
 app.use(express.static(path.resolve(__dirname, StaticDir)));
 
 const cookieSecret = process.env.COOKIE_SECRET;
+const SessionStore = db.createSessionStore(expressSession);
 let cookie = cookieParser(cookieSecret);
-let sessionStore = new expressSession.MemoryStore();
+let sessionStore = new SessionStore({pool: db.pool});
 let session = expressSession({
   store: sessionStore,
   name: 'a',
@@ -44,19 +45,19 @@ app.use(auth.initialize());
 app.use(auth.session());
 
 app.get('/', (req, res) => {
-  res.sendFile('default.html', { root: StaticDir })
+  res.sendFile('default.html', { root: StaticDir });
 });
 
 app.get('/auth/github', auth.authenticate('github'));
 app.get('/auth/github/callback',
   auth.authenticate('github', { failureRedirect: '/' }),
-  (req, res) => { res.redirect('/') }
+  (req, res) => res.redirect('/')
 );
 
 app.get('/auth/twitter', auth.authenticate('twitter'));
 app.get('/auth/twitter/callback',
   auth.authenticate('twitter', { failureRedirect: '/' }),
-  (req, res) => { res.redirect('/') }
+  (req, res) => res.redirect('/')
 );
 
 app.get('/deauth', (req, res) => {
@@ -85,22 +86,10 @@ wss.on('connection', (channel) => {
         return;
       }
 
-      let encodedAuthToken = sessionData.passport.user;
-      if (encodedAuthToken == null) {
-        // User is logged out. We may want to provide read-only access here.
-        return;
-      }
-      let authToken = db.decodeToken(encodedAuthToken);
-      db.rememberUser(authToken).then((user) => {
-        if (user == null) {
-          console.error('db returned empty user');
-          return;
-        }
-
-        channel.user = user;
-        channel.on('message', (message) => {
-          channel.send(`hey, ${JSON.stringify(channel.user)}`);
-        });
+      channel.session = sessionData;
+      channel.user = (sessionData.passport && sessionData.passport.user) || null;
+      channel.on('message', (message) => {
+        channel.send(`hey, ${JSON.stringify(channel.user)}`);
       });
     });
   });
