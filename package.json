@@ -7,7 +7,7 @@
     "build-js": "webpack",
     "build-css": "lessc style/main.less static/style.css",
     "makedb": "dropdb start && createdb start && psql -1 --dbname=start --file='./server/Schema.sql'",
-    "test": "jasmine",
+    "test": "jest",
     "start": "node main.js"
   },
   "repository": {
@@ -18,8 +18,10 @@
     "template"
   ],
   "dependencies": {
-    "babel-preset-env": "1",
+    "pg": "*",
+    "babel-loader": "6",
     "babel-register": "6",
+    "babel-preset-env": "1",
     "body-parser": "1",
     "cookie-parser": "1",
     "dotenv": "4",
@@ -27,7 +29,9 @@
     "express-session": "1",
     "passport": "^0.3",
     "passport-github": "1",
-    "passport-twitter": "1"
+    "passport-twitter": "1",
+    "react": "15",
+    "react-dom": "15"
   },
   "babel": {
     "presets": [["env", {"exclude": ["transform-regenerator", "transform-es2015-classes"]}]]

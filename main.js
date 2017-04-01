@@ -20,6 +20,10 @@ const expressSession = require('express-session');
 const db = require('./lib/db').default;
 const auth = require('./lib/auth').default;
 
+const react = require('react');
+const serveComponent = require('./lib/serve-component').default;
+const Root = require('./client/root').default;
+
 const StaticDir = 'static';
 
 let app = express();
@@ -45,7 +49,9 @@ app.use(auth.initialize());
 app.use(auth.session());
 
 app.get('/', (req, res) => {
-  res.sendFile('default.html', { root: StaticDir });
+  const title = 'insert something meaningful here';
+  let root = react.createElement(Root, null);
+  serveComponent(res, root, { title });
 });
 
 app.get('/auth/github', auth.authenticate('github'));
