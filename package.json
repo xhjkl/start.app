@@ -4,10 +4,10 @@
   "description": "neatly packaged best practices and opinions",
   "main": "main.js",
   "scripts": {
-    "build-js": "webpack",
-    "build-css": "lessc style/main.less static/style.css",
+    "build": "webpack",
     "makedb": "dropdb start && createdb start && psql -1 --dbname=start --file='./server/Schema.sql'",
     "test": "jest",
+    "relay": "relay-compiler --src ./ --schema './server/Schema.graphql'",
     "start": "node main.js"
   },
   "repository": {
@@ -18,10 +18,10 @@
     "template"
   ],
   "dependencies": {
-    "pg": "*",
     "babel-loader": "6",
-    "babel-register": "6",
+    "babel-plugin-relay": "^1.0.1",
     "babel-preset-env": "1",
+    "babel-register": "6",
     "body-parser": "1",
     "cookie-parser": "1",
     "dotenv": "4",
@@ -30,11 +30,28 @@
     "passport": "^0.3",
     "passport-github": "1",
     "passport-twitter": "1",
+    "pg": "*",
     "react": "15",
-    "react-dom": "15"
+    "react-dom": "15",
+    "react-relay": "^1",
+    "styled-components": "^2"
+  },
+  "optionalDependencies": {
+    "pg-native": "*"
   },
   "babel": {
-    "presets": [["env", {"exclude": ["transform-regenerator", "transform-es2015-classes"]}]]
+    "presets": [
+      [
+        "env",
+        {
+          "exclude": [
+            "transform-regenerator",
+            "transform-es2015-classes"
+          ]
+        }
+      ]
+    ],
+    "plugins": [ "relay" ]
   },
   "author": "xhjkl",
   "license": "UNLICENSED",

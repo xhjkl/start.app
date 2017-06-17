@@ -17,7 +17,7 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.js$/, exclude: 'node_modules', use: [{ loader: 'babel-loader' }] }
+      { test: /\.js$/, exclude: path.resolve(__dirname, 'node_modules'), use: [{ loader: 'babel-loader' }] }
     ]
   },
   plugins: [
@@ -28,5 +28,5 @@ module.exports = {
 };
 
 if (optimize) {
-  module.exports.plugins.push(new webpack.optimize.UglifyJSPlugin({ compress: { warnings: true } }));
+  module.exports.plugins.push(new webpack.optimize.UglifyJsPlugin({ compress: { warnings: true } }));
 }
