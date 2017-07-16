@@ -28,5 +28,7 @@ module.exports = {
 };
 
 if (optimize) {
-  module.exports.plugins.push(new webpack.optimize.UglifyJsPlugin({ compress: { warnings: true } }));
+  const UglifyEsPlugin = require('uglify-es-webpack-plugin');
+
+  module.exports.plugins.push(new UglifyEsPlugin({ compress: { warnings: true } }));
 }

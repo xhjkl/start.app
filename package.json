@@ -18,23 +18,29 @@
     "template"
   ],
   "dependencies": {
-    "babel-loader": "6",
-    "babel-plugin-relay": "^1.0.1",
-    "babel-preset-env": "1",
-    "babel-register": "6",
-    "body-parser": "1",
-    "cookie-parser": "1",
-    "dotenv": "4",
-    "express": "4",
-    "express-session": "1",
+    "babel-loader": "*",
+    "babel-plugin-relay": "*",
+    "babel-preset-env": "*",
+    "babel-preset-react": "*",
+    "babel-preset-stage-0": "*",
+    "babel-preset-stage-1": "*",
+    "babel-preset-stage-2": "*",
+    "babel-preset-stage-3": "*",
+    "babel-register": "*",
+    "body-parser": "*",
+    "cookie-parser": "*",
+    "dotenv": "*",
+    "express": "*",
+    "express-session": "*",
     "passport": "^0.3",
-    "passport-github": "1",
-    "passport-twitter": "1",
+    "passport-github": "*",
+    "passport-twitter": "*",
     "pg": "*",
-    "react": "15",
-    "react-dom": "15",
+    "react": "16",
+    "react-dom": "16",
     "react-relay": "^1",
-    "styled-components": "^2"
+    "styled-components": "^2",
+    "uglify-es-webpack-plugin": "^0.0.2"
   },
   "optionalDependencies": {
     "pg-native": "*"
@@ -44,14 +50,24 @@
       [
         "env",
         {
+          "targets": {
+            "browsers": ["last 2 versions", "safari >= 10"]
+          },
           "exclude": [
             "transform-regenerator",
             "transform-es2015-classes"
           ]
         }
-      ]
+      ],
+      [ "react" ],
+      [ "stage-0" ],
+      [ "stage-1" ],
+      [ "stage-2" ],
+      [ "stage-3" ]
     ],
-    "plugins": [ "relay" ]
+    "plugins": [
+      "relay"
+    ]
   },
   "author": "xhjkl",
   "license": "UNLICENSED",

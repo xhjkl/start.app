@@ -109,7 +109,7 @@ wss.on('connection', (channel, upgradeReq) => {
 db.check((error) => {
   if (error != null) {
     console.error(error);
-    return;
+    process.exit(3);
   }
 
   server.listen(31337, () => {
