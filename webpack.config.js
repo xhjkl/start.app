@@ -23,12 +23,13 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': { NODE_ENV: optimize? '"production"': '"development"' }
-    })
+    }),
   ]
 };
 
 if (optimize) {
-  const UglifyEsPlugin = require('uglify-es-webpack-plugin');
+const Uglify = require('uglifyjs-webpack-plugin');
 
-  module.exports.plugins.push(new UglifyEsPlugin({ compress: { warnings: true } }));
+  module.exports.plugins.push(new Uglify({
+  }));
 }

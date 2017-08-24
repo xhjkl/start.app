@@ -35,12 +35,13 @@
     "passport": "^0.3",
     "passport-github": "*",
     "passport-twitter": "*",
-    "pg": "*",
+    "pg": "^7",
+    "ws": "^3",
     "react": "16",
     "react-dom": "16",
     "react-relay": "^1",
     "styled-components": "^2",
-    "uglify-es-webpack-plugin": "^0.0.2"
+    "uglifyjs-webpack-plugin": "1"
   },
   "optionalDependencies": {
     "pg-native": "*"
@@ -51,7 +52,10 @@
         "env",
         {
           "targets": {
-            "browsers": ["last 2 versions", "safari >= 10"]
+            "browsers": [
+              "last 2 versions",
+              "safari >= 10"
+            ]
           },
           "exclude": [
             "transform-regenerator",
@@ -59,11 +63,21 @@
           ]
         }
       ],
-      [ "react" ],
-      [ "stage-0" ],
-      [ "stage-1" ],
-      [ "stage-2" ],
-      [ "stage-3" ]
+      [
+        "react"
+      ],
+      [
+        "stage-0"
+      ],
+      [
+        "stage-1"
+      ],
+      [
+        "stage-2"
+      ],
+      [
+        "stage-3"
+      ]
     ],
     "plugins": [
       "relay"

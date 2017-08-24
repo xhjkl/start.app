@@ -72,7 +72,7 @@ app.get('/deauth', (req, res) => {
 });
 
 app.use((req, res) => {
-  res.sendFile('notfound.html', { root: StaticDir });
+  res.status(404).sendFile('notfound.html', { root: __dirname });
 });
 
 let onWebsocketConnection = (channel) => {
@@ -112,7 +112,7 @@ db.check((error) => {
     process.exit(3);
   }
 
-  server.listen(31337, () => {
+  server.listen(process.env.PORT || 31337, () => {
     console.log(server.address());
   });
 });
