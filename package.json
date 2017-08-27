@@ -35,6 +35,7 @@
     "passport": "^0.3",
     "passport-github": "*",
     "passport-twitter": "*",
+    "graphql": "*",
     "pg": "^7",
     "ws": "^3",
     "react": "16",
