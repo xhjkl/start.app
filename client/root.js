@@ -1,29 +1,29 @@
 //
 // Root component
 //
-import React from 'react';
+import React from 'react'
 
 export default class Root extends React.Component {
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       loggedIn: this.props.loggedIn,
-    };
+    }
   }
 
   render() {
-    const $ = React.createElement;
-    const { loggedIn } = this.state;
+    const $ = React.createElement
+    const { loggedIn } = this.state
 
-    let all = [];
+    let all = []
     if (loggedIn) {
       all = [
         $('h1', null, 'Hey, love'),
         $('div', null,
           $('a', { href: '/deauth' }, 'Log out')
         ),
-      ];
+      ]
     } else {
       all = [
         $('h1', null, 'Hey'),
@@ -33,11 +33,11 @@ export default class Root extends React.Component {
         $('div', null,
           $('a', { href: '/auth/github' }, 'Log in with Github')
         ),
-      ];
+      ]
     }
 
     return $('div', null,
       ...all
-    );
+    )
   }
-};
+}

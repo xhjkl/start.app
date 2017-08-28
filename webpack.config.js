@@ -1,9 +1,9 @@
-const path = require('path');
-const webpack = require('webpack');
+const path = require('path')
+const webpack = require('webpack')
 
-const dotenv = require('dotenv').config();
+const dotenv = require('dotenv').config() // eslint-disable-line no-unused-vars
 
-const optimize = (process.env.NODE_ENV === 'production');
+const optimize = (process.env.NODE_ENV === 'production')
 
 module.exports = {
   entry: path.resolve(__dirname, 'client/start.js'),
@@ -22,14 +22,14 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': { NODE_ENV: optimize? '"production"': '"development"' }
+      'process.env': { NODE_ENV: optimize ? '"production"' : '"development"' }
     }),
   ]
-};
+}
 
 if (optimize) {
-const Uglify = require('uglifyjs-webpack-plugin');
+  const Uglify = require('uglifyjs-webpack-plugin')
 
   module.exports.plugins.push(new Uglify({
-  }));
+  }))
 }

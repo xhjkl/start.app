@@ -1,7 +1,7 @@
 //
 //  Styles for the whole body
 //
-import { injectGlobal } from 'styled-components';
+import { injectGlobal } from 'styled-components'
 
 export default injectGlobal`html, body, #root {
   font: 100% sans-serif;
@@ -13,4 +13,4 @@ export default injectGlobal`html, body, #root {
   margin: 0;
   padding: 0;
 }
-`;
+`
