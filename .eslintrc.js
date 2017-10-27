@@ -3,6 +3,9 @@ module.exports = {
   parser: 'babel-eslint',
   parserOptions: { sourceType: 'module' },
   extends: 'standard',
+  globals: {
+    NODE_ENV: false,
+  },
   plugins: [
     'standard',
     'promise'

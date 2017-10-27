@@ -4,6 +4,7 @@
   "description": "neatly packaged best practices and opinions",
   "main": "main.js",
   "scripts": {
+    "go": "webpack && node main.js",
     "build": "webpack",
     "makedb": "dropdb start && createdb start && psql -1 --dbname=start --file='./server/Schema.sql'",
     "test": "jest",
@@ -60,7 +61,8 @@
           },
           "exclude": [
             "transform-regenerator",
-            "transform-es2015-classes"
+            "transform-es2015-classes",
+            "transform-es2015-arrow-functions"
           ]
         }
       ],

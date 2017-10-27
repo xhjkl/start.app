@@ -10,26 +10,34 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'static'),
     publicPath: '/',
-    filename: 'app.js'
+    filename: 'app.js',
   },
   resolve: {
-    modules: ['client', 'common', 'node_modules']
+    modules: ['client', 'common', 'node_modules'],
   },
   module: {
     rules: [
-      { test: /\.js$/, exclude: path.resolve(__dirname, 'node_modules'), use: [{ loader: 'babel-loader' }] }
-    ]
+      { test: /\.js$/, exclude: path.resolve(__dirname, 'node_modules'), use: [{ loader: 'babel-loader' }] },
+    ],
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': { NODE_ENV: optimize ? '"production"' : '"development"' }
+      'process.env': { NODE_ENV: optimize ? '"production"' : '"development"' },
     }),
-  ]
+  ],
 }
 
 if (optimize) {
   const Uglify = require('uglifyjs-webpack-plugin')
 
-  module.exports.plugins.push(new Uglify({
-  }))
+  module.exports.plugins.push(new Uglify({ uglifyOptions: {
+    compress: {
+      ecma: 7,
+      warnings: true,
+    },
+    mangle: {
+      'keep_quoted': true,
+      reserved: [],
+    },
+  } }))
 }
