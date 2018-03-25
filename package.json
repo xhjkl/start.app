@@ -4,12 +4,11 @@
   "description": "neatly packaged best practices and opinions",
   "main": "main.js",
   "scripts": {
-    "go": "webpack && node main.js",
-    "build": "webpack",
-    "makedb": "dropdb start && createdb start && psql -1 --dbname=start --file='./lib/Schema.sql'",
+    "go": "yarn build && yarn start",
+    "build": "parcel build src/client/main.tsx --out-dir build --out-file app.js",
+    "makedb": "dropdb start && createdb start && psql -1 --dbname=start --file='./src/server/Schema.sql'",
     "test": "jest",
-    "relay": "relay-compiler --src ./ --schema './lib/Schema.graphql'",
-    "start": "node main.js"
+    "start": "babel-node --extensions '.ts,.tsx' src/server/main.tsx"
   },
   "repository": {
     "type": "git",
