@@ -2,13 +2,17 @@ module.exports = {
   env: { browser: true, es6: true, node: true },
   parser: 'babel-eslint',
   parserOptions: { sourceType: 'module' },
-  extends: 'standard',
+  extends: [
+    'standard',
+    'plugin:flowtype/recommended'
+  ],
   globals: {
     NODE_ENV: false,
   },
   plugins: [
-    'standard',
-    'promise'
+    'flowtype',
+    'promise',
+    'standard'
   ],
   rules: {
     'no-undef': ['error'],
