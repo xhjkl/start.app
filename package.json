@@ -75,9 +75,6 @@
       [
         "stage-3"
       ]
-    ],
-    "plugins": [
-      "relay"
     ]
   },
   "author": "xhjkl",

@@ -1,32 +1,36 @@
 //
 //  Entry point for the server side
 //
-const path = require('path')
-const http = require('http')
+import path from 'path'
+import http from 'http'
 
-const dotenv = require('dotenv').config()
-if (dotenv.error != null) {
-  console.error('check dotenv:', dotenv.error)
+// We can not use static imports in the main module
+// because we want to populate the env before loading the deps.
+const dotenv = require('dotenv')
+const { parsed: parsedDotenv, error: dotenvError } = dotenv.config()
+if (dotenvError != null) {
+  console.error('check dotenv:', dotenvError)
   process.exit(3)
 }
+
 const express = require('express')
 
-require('babel-register')
+const db = require('./db').default
+const auth = require('./auth').default
+const attachWebsocketEndpoint = require('./websocket').default
 
-const { default: db } = require('./lib/db')
-const { default: auth } = require('./lib/auth')
-const { default: attachWebsocketEndpoint } = require('./lib/websocket')
-
-const { default: serveComponent } = require('./lib/serve-component')
-const Root = require('./client/root').default
-const Frame = require('./client/frame').default
+const serveComponent = require('./serve-component').default
+const Root = require('../client/root').default
+const Frame = require('../client/frame').default
 
 const StaticDir = 'static'
+const BuildDir = 'build'
 
 let app = express()
 app.disable('x-powered-by')
 
 app.use(express.static(path.resolve(__dirname, StaticDir)))
+app.use(express.static(path.resolve(__dirname, BuildDir)))
 
 auth.setRoutes(app)
 
