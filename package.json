@@ -18,15 +18,13 @@
     "template"
   ],
   "dependencies": {
-    "babel-loader": "*",
-    "babel-plugin-relay": "*",
+    "babel-core": "*",
     "babel-preset-env": "*",
     "babel-preset-react": "*",
     "babel-preset-stage-0": "*",
     "babel-preset-stage-1": "*",
     "babel-preset-stage-2": "*",
     "babel-preset-stage-3": "*",
-    "babel-register": "*",
     "body-parser": "*",
     "cookie-parser": "*",
     "dotenv": "*",
@@ -35,14 +33,11 @@
     "passport": "^0.3",
     "passport-github": "*",
     "passport-twitter": "*",
-    "graphql": "*",
     "pg": "^7",
-    "ws": "^3",
-    "react": "16",
-    "react-dom": "16",
-    "react-relay": "^1",
+    "react": "^16",
+    "react-dom": "^16",
     "styled-components": "^2",
-    "uglifyjs-webpack-plugin": "1"
+    "ws": "^3"
   },
   "optionalDependencies": {
     "pg-native": "*"
@@ -87,5 +82,14 @@
   },
   "author": "xhjkl",
   "license": "UNLICENSED",
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "@types/express": "^4.11.1",
+    "@types/jest": "^22.2.2",
+    "@types/node": "^9.6.0",
+    "@types/react": "^16.0.41",
+    "tslint": "^5.9.1",
+    "tslint-config-standard": "^7.0.0",
+    "typescript": "^2.7.2"
+  }
 }
