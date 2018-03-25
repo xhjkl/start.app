@@ -31,12 +31,12 @@ if (optimize) {
   const Uglify = require('uglifyjs-webpack-plugin')
 
   module.exports.plugins.push(new Uglify({ uglifyOptions: {
+    comments: false,
     compress: {
       ecma: 7,
       warnings: true,
     },
     mangle: {
-      'keep_quoted': true,
       reserved: [],
     },
   } }))
