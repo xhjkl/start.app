@@ -1,5 +1,6 @@
 # All
 .env
+*-error.log
 *-lock.json
 node_modules/
 
