@@ -15,7 +15,7 @@ require('babel-register')
 
 const { default: db } = require('./lib/db')
 const { default: auth } = require('./lib/auth')
-const { default: attachWebsocketEndpoint } = require('./lib/attach-websocket-endpoint')
+const { default: attachWebsocketEndpoint } = require('./lib/websocket')
 
 const { default: serveComponent } = require('./lib/serve-component')
 const Root = require('./client/root').default
