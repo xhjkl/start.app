@@ -6,9 +6,9 @@
   "scripts": {
     "go": "webpack && node main.js",
     "build": "webpack",
-    "makedb": "dropdb start && createdb start && psql -1 --dbname=start --file='./server/Schema.sql'",
+    "makedb": "dropdb start && createdb start && psql -1 --dbname=start --file='./lib/Schema.sql'",
     "test": "jest",
-    "relay": "relay-compiler --src ./ --schema './server/Schema.graphql'",
+    "relay": "relay-compiler --src ./ --schema './lib/Schema.graphql'",
     "start": "node main.js"
   },
   "repository": {
