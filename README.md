@@ -1,4 +1,4 @@
-StartJS is forkable repo to hit the ground running.
+StartApp is forkable repo to hit the ground running.
 
 It already has
   a Websocket endpoint,
