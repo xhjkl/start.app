@@ -1,8 +1,8 @@
 //
 //  Entry point for the server side
 //
-import path from 'path'
-import http from 'http'
+import * as path from 'path'
+import * as http from 'http'
 
 // We can not use static imports in the main module
 // because we want to populate the env before loading the deps.
@@ -29,8 +29,8 @@ const BuildDir = 'build'
 let app = express()
 app.disable('x-powered-by')
 
-app.use(express.static(path.resolve(__dirname, StaticDir)))
-app.use(express.static(path.resolve(__dirname, BuildDir)))
+app.use(express.static(path.resolve(__dirname, '..', '..', StaticDir)))
+app.use(express.static(path.resolve(__dirname, '..', '..', BuildDir)))
 
 auth.setRoutes(app)
 
@@ -45,7 +45,7 @@ app.get('/', (req, res) => {
 })
 
 app.use((req, res) => {
-  res.status(404).sendFile('notfound.html', { root: __dirname })
+  res.status(404).sendFile('notfound.html', { root: path.resolve(__dirname, '..', 'client') })
 })
 
 let server = http.createServer(app)

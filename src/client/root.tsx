@@ -1,8 +1,8 @@
 //
 // Root component
 //
-import React from 'react'
-import { injectGlobal } from 'styled-components'
+import * as React from 'react'
+import { injectGlobal } from 'emotion'
 
 injectGlobal`
   html, body, #root {
@@ -19,38 +19,31 @@ injectGlobal`
 
 export default class Root extends React.Component {
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = { ...this.props }
-    this.db = null
   }
 
-  render() {
-    const $ = React.createElement
+  render () {
     const { loggedIn } = this.state
 
-    let all = []
     if (loggedIn) {
-      all = [
-        $('h1', null, 'Hey, love'),
-        $('div', null,
-          $('a', { href: '/deauth' }, 'Log out')
-        ),
-      ]
+      return (<div>
+        <h1>Hey, love</h1>
+        <div>
+          <a href='/death'>Log out</a>
+        </div>
+      </div>)
     } else {
-      all = [
-        $('h1', null, 'Hey'),
-        $('div', null,
-          $('a', { href: '/auth/twitter' }, 'Log in with Twitter')
-        ),
-        $('div', null,
-          $('a', { href: '/auth/github' }, 'Log in with Github')
-        ),
-      ]
+      return (<div>
+        <h1>Hey</h1>
+        <div>
+          <a href='/auth/twitter'>Log in with Twitter</a>
+        </div>
+        <div>
+          <a href='/auth/github'>Log in with Github</a>
+        </div>
+      </div>)
     }
-
-    return $('div', null,
-      ...all
-    )
   }
 }
