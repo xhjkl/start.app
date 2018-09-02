@@ -17,11 +17,20 @@ injectGlobal`
   }
 `
 
-export default class Root extends React.Component {
+type Props = {
+  loggedIn: boolean,
+}
+
+type State = {
+  loggedIn: boolean,
+}
+
+export default class Root extends React.Component<Props, State> {
 
   constructor (props) {
     super(props)
-    this.state = { ...this.props }
+    const { children, ...forkedProps } = this.props
+    this.state = { ...forkedProps }
   }
 
   render () {
@@ -31,7 +40,7 @@ export default class Root extends React.Component {
       return (<div>
         <h1>Hey, love</h1>
         <div>
-          <a href='/death'>Log out</a>
+          <a href='/deauth'>Log out</a>
         </div>
       </div>)
     } else {

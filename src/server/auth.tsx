@@ -1,13 +1,13 @@
 //
 //  Granting privileges
 //
-import passport from 'passport'
-import passportTwitter from 'passport-twitter'
-import passportGitHub from 'passport-github'
+import * as passport from 'passport'
+import * as passportTwitter from 'passport-twitter'
+import * as passportGitHub from 'passport-github'
 
-import bodyParser from 'body-parser' // eslint-disable-line no-unused-vars
-import cookieParser from 'cookie-parser'
-import expressSession from 'express-session'
+import * as bodyParser from 'body-parser' // eslint-disable-line no-unused-vars
+import * as cookieParser from 'cookie-parser'
+import * as expressSession from 'express-session'
 
 import db from './db'
 
@@ -64,13 +64,13 @@ passport.setRoutes = (app) => {
   app.get('/auth/github', passport.authenticate('github'))
   app.get('/auth/github/callback',
     passport.authenticate('github', { failureRedirect: '/' }),
-    (req, res) => res.redirect('/')
+    (req, res) => res.redirect('/'),
   )
 
   app.get('/auth/twitter', passport.authenticate('twitter'))
   app.get('/auth/twitter/callback',
     passport.authenticate('twitter', { failureRedirect: '/' }),
-    (req, res) => res.redirect('/')
+    (req, res) => res.redirect('/'),
   )
 
   app.get('/deauth', (req, res) => {

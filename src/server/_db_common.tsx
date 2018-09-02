@@ -1,9 +1,9 @@
 //
 //  Parts reusable across datastore submodules
 //
-import url from 'url'
+import * as url from 'url'
 
-import pg from 'pg'
+import * as pg from 'pg'
 
 // Crash because of db error
 export let dbFailure = (error) => {

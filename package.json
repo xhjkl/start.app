@@ -4,11 +4,12 @@
   "description": "neatly packaged best practices and opinions",
   "main": "main.js",
   "scripts": {
-    "go": "yarn build && yarn start",
-    "build": "parcel build src/client/main.tsx --out-dir build --out-file app",
-    "makedb": "dropdb start && createdb start && psql -1 --dbname=start --file='./src/server/Schema.sql'",
+    "start": "node build/server/main.js",
+    "build": "yarn build-back && yarn build-front",
+    "build-front": "parcel build src/client/main.tsx --out-dir build/public --out-file app",
+    "build-back": "tsc --outDir build --target 'ESNEXT' --module 'commonjs'",
     "test": "jest",
-    "start": "babel-node --extensions '.ts,.tsx' src/server/main.tsx"
+    "coverage": "jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -32,7 +33,7 @@
     "emotion-server": "*",
     "express": "*",
     "express-session": "*",
-    "parcel-bundler": "*",
+    "parcel": "*",
     "passport": "*",
     "passport-github": "*",
     "passport-twitter": "*",
@@ -90,6 +91,6 @@
     "@types/react-dom": "^16.0.5",
     "tslint": "^5.9.1",
     "tslint-config-standard": "^7.0.0",
-    "typescript": "^2.7.2"
+    "typescript": "^3"
   }
 }

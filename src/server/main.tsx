@@ -45,7 +45,10 @@ app.get('/', (req, res) => {
 })
 
 app.use((req, res) => {
-  res.status(404).sendFile('notfound.html', { root: path.resolve(__dirname, '..', 'client') })
+  res.status(404).sendFile(
+    'notfound.html',
+    { root: path.resolve(__dirname, '..', '..', 'src', 'client') },
+  )
 })
 
 let server = http.createServer(app)
