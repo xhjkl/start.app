@@ -6,16 +6,15 @@ import { renderToString, renderToStaticNodeStream } from 'react-dom/server'
 import { renderStylesToString } from 'emotion-server'
 
 export default (res, frameClass, frameProps, mainClass, mainProps) => {
+  const mainCompo = React.createElement(mainClass, mainProps)
+  const mainMarkup = renderStylesToString(renderToString(mainCompo))
 
-  let mainCompo = React.createElement(mainClass, mainProps)
-  let mainMarkup = renderStylesToString(renderToString(mainCompo))
-
-  let frameCompo = React.createElement(frameClass, {
+  const frameCompo = React.createElement(frameClass, {
     ...frameProps,
     ...{ mainMarkup, mainProps }
   })
 
-  let markup = renderToStaticNodeStream(frameCompo)
+  const markup = renderToStaticNodeStream(frameCompo)
 
   res.setHeader('Content-Type', 'text/html; charset=utf-8')
   res.write('<!doctype html>\n')

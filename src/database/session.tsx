@@ -1,25 +1,25 @@
 //
 //  Session keeping
 //
-import { dbFailure } from './_db_common'
+import { dbFailure } from './common'
 
-// Class factory accepts `express-session` module
-export let createSessionStore = (session) => {
+/** Class factory accepts `express-session` module */
+export const createSessionStore = (session) => {
   const Store = session.Store
 
   return class PGSessionStore extends Store {
-
-    constructor({ pool }) {
+    constructor ({ pool }) {
       super()
       this.pool = pool
     }
 
-    get(sid, fn) {
-      this.pool.query(`
-        select "associated_data"
-        from "session"
-        where "token" = $1
-        limit 1
+    get (sid, fn) {
+      this.pool.query(
+        `
+          select "associated_data"
+          from "session"
+          where "token" = $1
+          limit 1
         `,
         [sid]
       ).then((res) => {
@@ -28,21 +28,22 @@ export let createSessionStore = (session) => {
           return fn(null, null)
         }
 
-        let obj = res.rows[0].associated_data
+        const obj = res.rows[0].associated_data
         fn(null, obj)
       }).catch(dbFailure)
     }
 
-    set(sid, sess, fn) {
+    set (sid, sess, fn) {
       let payload = JSON.stringify(sess)
       let userid = null
       if (sess.passport != null && sess.passport.user != null) {
         userid = sess.passport.user
       }
-      this.pool.query(`
-        insert into "session"("user_id", "token", "associated_data")
-        values ($1, $2, $3)
-        on conflict ("token") do update set "user_id" = $1, "associated_data" = $3
+      this.pool.query(
+        `
+          insert into "session"("user_id", "token", "associated_data")
+          values ($1, $2, $3)
+          on conflict ("token") do update set "user_id" = $1, "associated_data" = $3
         `,
         [userid, sid, payload]
       ).then((res) => {
@@ -55,10 +56,11 @@ export let createSessionStore = (session) => {
       }).catch(dbFailure)
     }
 
-    destroy(sid, fn) {
-      this.pool.query(`
-        delete from "session"
-        where "token" = $1
+    destroy (sid, fn) {
+      this.pool.query(
+        `
+          delete from "session"
+          where "token" = $1
         `,
         [sid]
       ).then((res) => {
@@ -66,9 +68,10 @@ export let createSessionStore = (session) => {
       }).catch(dbFailure)
     }
 
-    clear(sid, fn) {
-      this.pool.query(`
-        delete from "session"
+    clear (sid, fn) {
+      this.pool.query(
+        `
+          delete from "session"
         `,
         []
       ).then((res) => {
@@ -76,15 +79,16 @@ export let createSessionStore = (session) => {
       }).catch(dbFailure)
     }
 
-    touch(sid, sess, fn) {
+    touch (sid, sess, fn) {
       // We rely on triggers to refresh the timestamp
       this.set(sid, sess, fn)
     }
 
-    ids(fn) {
-      this.pool.query(`
-        select "token"
-        from "session"
+    ids (fn) {
+      this.pool.query(
+        `
+          select "token"
+          from "session"
         `,
         []
       ).then((res) => {
@@ -93,10 +97,11 @@ export let createSessionStore = (session) => {
       }).catch(dbFailure)
     }
 
-    all(fn) {
-      this.pool.query(`
-        select "associated_data"
-        from "session"
+    all (fn) {
+      this.pool.query(
+        `
+          select "associated_data"
+          from "session"
         `,
         []
       ).then((res) => {

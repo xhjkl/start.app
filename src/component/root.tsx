@@ -1,5 +1,5 @@
 //
-// Root component
+//  Root component.
 //
 import * as React from 'react'
 import { injectGlobal } from 'emotion'
@@ -26,7 +26,6 @@ type State = {
 }
 
 export default class Root extends React.Component<Props, State> {
-
   constructor (props) {
     super(props)
     const { children, ...forkedProps } = this.props

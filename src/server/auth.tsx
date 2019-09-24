@@ -1,15 +1,14 @@
 //
-//  Granting privileges
+//  Granting privileges.
 //
 import * as passport from 'passport'
 import * as passportTwitter from 'passport-twitter'
 import * as passportGitHub from 'passport-github'
 
-import * as bodyParser from 'body-parser' // eslint-disable-line no-unused-vars
 import * as cookieParser from 'cookie-parser'
 import * as expressSession from 'express-session'
 
-import db from './db'
+import * as db from '../database'
 
 const baseURL = '127.0.0.1:31337'
 
@@ -29,7 +28,7 @@ passport.deserializeUser((uid, done) => {
 passport.use(new passportGitHub.Strategy({
   clientID: process.env.GITHUB_KEY,
   clientSecret: process.env.GITHUB_SECRET,
-  callbackURL: `//${ baseURL }/auth/github/callback`,
+  callbackURL: `//${baseURL}/auth/github/callback`
 }, (accessToken, refreshToken, profile, done) => {
   return done(null, profile)
 }))
@@ -37,7 +36,7 @@ passport.use(new passportGitHub.Strategy({
 passport.use(new passportTwitter.Strategy({
   consumerKey: process.env.TWITTER_KEY,
   consumerSecret: process.env.TWITTER_SECRET,
-  callbackURL: `//${ baseURL }/auth/twitter/callback`,
+  callbackURL: `//${baseURL}/auth/twitter/callback`
 }, (token, secretToken, profile, done) => {
   return done(null, profile)
 }))
@@ -51,7 +50,7 @@ let session = expressSession({
   name: 'a',
   secret: cookieSecret,
   resave: true,
-  saveUninitialized: true,
+  saveUninitialized: true
 })
 
 passport.setRoutes = (app) => {
@@ -64,13 +63,13 @@ passport.setRoutes = (app) => {
   app.get('/auth/github', passport.authenticate('github'))
   app.get('/auth/github/callback',
     passport.authenticate('github', { failureRedirect: '/' }),
-    (req, res) => res.redirect('/'),
+    (req, res) => res.redirect('/')
   )
 
   app.get('/auth/twitter', passport.authenticate('twitter'))
   app.get('/auth/twitter/callback',
     passport.authenticate('twitter', { failureRedirect: '/' }),
-    (req, res) => res.redirect('/'),
+    (req, res) => res.redirect('/')
   )
 
   app.get('/deauth', (req, res) => {

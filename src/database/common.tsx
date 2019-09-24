@@ -1,17 +1,14 @@
-//
-//  Parts reusable across datastore submodules
-//
 import * as url from 'url'
 
 import * as pg from 'pg'
 
-// Crash because of db error
+/** Crash because of a db error. */
 export let dbFailure = (error) => {
   console.error('db failure:', error)
   process.exit(33)
 }
 
-// Crash because of query resolution failure
+/** Crash because of a query resolution failure. */
 export let queryFailure = (error, query = '') => {
   console.error('while querying:', error)
   console.error('  provoking expression:', query)
@@ -26,13 +23,13 @@ const configuration = {
   host: parts.hostname,
   port: parts.port,
   database: parts.pathname != null ? parts.pathname.split('/')[1] : null,
-  ssl: (process.env.NODE_ENV === 'production'),
+  ssl: (process.env.NODE_ENV === 'production')
 }
 
 export let pool = new pg.Pool(configuration)
 export let connect = pool.connect.bind(pool)
 
-// Preflight smoketest
+/** Preflight smoketest. */
 export let check = (done) => {
   pool.query('select true as answer', (error, re) => {
     if (error != null) {
