@@ -4,7 +4,8 @@
   "description": "neatly packaged best practices and opinions",
   "main": "main.js",
   "scripts": {
-    "start": "node build/server/main.js",
+    "start": "ts-node --transpile-only --require='dotenv/config' src/main.tsx",
+    "lint": "eslint src/**/*.{ts,tsx}",
     "build": "yarn build-back && yarn build-front",
     "build-front": "parcel build src/client/main.tsx --out-dir build/public --out-file app",
     "build-back": "tsc --outDir build --target 'ESNEXT' --module 'commonjs'",
@@ -80,17 +81,60 @@
       ]
     ]
   },
+  "jest": {
+    "roots": [
+      "<rootDir>/test"
+    ],
+    "transform": {
+      "[.]tsx?$": "ts-jest"
+    }
+  },
+  "pre-commit": "lint-staged",
+  "lint-staged": {
+    "*.tsx": [
+      "prettier --write",
+      "standard --fix",
+      "git add"
+    ],
+    "*.md": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "standard": {
+    "env": ["jest"],
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint/eslint-plugin"
+    ]
+  },
   "author": "xhjkl",
   "license": "UNLICENSED",
   "private": true,
   "devDependencies": {
-    "@types/express": "^4.11.1",
-    "@types/jest": "^23.3.1",
-    "@types/node": "^10.0.0",
-    "@types/react": "^16.0.41",
-    "@types/react-dom": "^16.0.5",
-    "tslint": "^5.9.1",
-    "tslint-config-standard": "^8.0.0",
-    "typescript": "^3"
+    "@types/dotenv": "*",
+    "@types/express": "*",
+    "@types/jest": "*",
+    "@types/node": "*",
+    "@types/pg": "*",
+    "@types/react": "*",
+    "@types/react-dom": "*",
+    "@types/ws": "*",
+    "@typescript-eslint/eslint-plugin": "*",
+    "@typescript-eslint/parser": "*",
+    "eslint": "*",
+    "eslint-config-standard": "*",
+    "eslint-plugin-import": "*",
+    "eslint-plugin-node": "*",
+    "eslint-plugin-promise": "*",
+    "eslint-plugin-react": "*",
+    "eslint-plugin-standard": "*",
+    "jest": "*",
+    "standard": "*",
+    "ts-jest": "*",
+    "ts-node": "*",
+    "tslint": "*",
+    "tslint-config-standard": "*",
+    "typescript": "*"
   }
 }
