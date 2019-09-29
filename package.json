@@ -17,7 +17,7 @@
     "url": "."
   },
   "keywords": [
-    "template"
+    "template", "scaffold"
   ],
   "dependencies": {
     "babel-core": "*",
@@ -112,29 +112,33 @@
   "license": "UNLICENSED",
   "private": true,
   "devDependencies": {
+    "@types/cookie-parser": "*",
     "@types/dotenv": "*",
+    "@types/express-session": "*",
     "@types/express": "*",
     "@types/jest": "*",
     "@types/node": "*",
+    "@types/passport-github": "*",
+    "@types/passport-twitter": "*",
     "@types/pg": "*",
-    "@types/react": "*",
     "@types/react-dom": "*",
+    "@types/react": "*",
     "@types/ws": "*",
     "@typescript-eslint/eslint-plugin": "*",
     "@typescript-eslint/parser": "*",
-    "eslint": "*",
     "eslint-config-standard": "*",
     "eslint-plugin-import": "*",
     "eslint-plugin-node": "*",
     "eslint-plugin-promise": "*",
     "eslint-plugin-react": "*",
     "eslint-plugin-standard": "*",
+    "eslint": "*",
     "jest": "*",
     "standard": "*",
     "ts-jest": "*",
     "ts-node": "*",
-    "tslint": "*",
     "tslint-config-standard": "*",
+    "tslint": "*",
     "typescript": "*"
   }
 }
