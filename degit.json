@@ -1,0 +1,13 @@
+[
+  {
+    "action": "rename",
+    "from": "dotenv-template",
+    "to": ".env"
+  },
+  {
+    "action": "remove",
+    "values": [
+      "README.md"
+    ]
+  }
+]

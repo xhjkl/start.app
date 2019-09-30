@@ -5,6 +5,7 @@ import * as passport from 'passport'
 import * as passportTwitter from 'passport-twitter'
 import * as passportGitHub from 'passport-github'
 
+import { Router, Request } from 'express' // eslint-disable-line no-unused-vars
 import * as cookieParser from 'cookie-parser'
 import * as expressSession from 'express-session'
 
@@ -26,26 +27,25 @@ passport.deserializeUser((uid, done) => {
 })
 
 passport.use(new passportGitHub.Strategy({
-  clientID: process.env.GITHUB_KEY,
-  clientSecret: process.env.GITHUB_SECRET,
+  clientID: process.env.GITHUB_KEY!,
+  clientSecret: process.env.GITHUB_SECRET!,
   callbackURL: `//${baseURL}/auth/github/callback`
-}, (accessToken, refreshToken, profile, done) => {
+}, (_accessToken, _refreshToken, profile, done) => {
   return done(null, profile)
 }))
 
 passport.use(new passportTwitter.Strategy({
-  consumerKey: process.env.TWITTER_KEY,
-  consumerSecret: process.env.TWITTER_SECRET,
+  consumerKey: process.env.TWITTER_KEY!,
+  consumerSecret: process.env.TWITTER_SECRET!,
   callbackURL: `//${baseURL}/auth/twitter/callback`
-}, (token, secretToken, profile, done) => {
+}, (_token, _secretToken, profile, done) => {
   return done(null, profile)
 }))
 
-const cookieSecret = process.env.COOKIE_SECRET
-const SessionStore = db.createSessionStore(expressSession)
-let cookie = cookieParser(cookieSecret)
-let sessionStore = new SessionStore({ pool: db.pool })
-let session = expressSession({
+const cookieSecret = process.env.COOKIE_SECRET!
+const cookie = cookieParser(cookieSecret)
+const sessionStore = new db.PGSessionStore({ pool: db.pool })
+const session = expressSession({
   store: sessionStore,
   name: 'a',
   secret: cookieSecret,
@@ -53,32 +53,46 @@ let session = expressSession({
   saveUninitialized: true
 })
 
-passport.setRoutes = (app) => {
-  app.use(cookie)
-  app.use(session)
+const createAuthRouter = () => {
+  const router = Router()
 
-  app.use(passport.initialize())
-  app.use(passport.session())
+  router.use(cookie)
+  router.use(session)
 
-  app.get('/auth/github', passport.authenticate('github'))
-  app.get('/auth/github/callback',
+  router.use(passport.initialize())
+  router.use(passport.session())
+
+  router.get('/auth/github', passport.authenticate('github'))
+  router.get('/auth/github/callback',
     passport.authenticate('github', { failureRedirect: '/' }),
-    (req, res) => res.redirect('/')
+    (_req, res) => res.redirect('/')
   )
 
-  app.get('/auth/twitter', passport.authenticate('twitter'))
-  app.get('/auth/twitter/callback',
+  router.get('/auth/twitter', passport.authenticate('twitter'))
+  router.get('/auth/twitter/callback',
     passport.authenticate('twitter', { failureRedirect: '/' }),
-    (req, res) => res.redirect('/')
+    (_req, res) => res.redirect('/')
   )
 
-  app.get('/deauth', (req, res) => {
+  router.get('/deauth', (req, res) => {
     req.logout()
     res.redirect('/')
   })
+
+  return router
 }
 
-passport.cookie = cookie
-passport.sessionStore = sessionStore
+const getUserFromRequest = (req: Request): { [k: string]: string } | null => {
+  if (
+    req.session == null ||
+    req.session.passport == null ||
+    req.session.passport.user == null
+  ) {
+    return null
+  }
 
-export default passport
+  return req.session.passport.user
+}
+
+export default createAuthRouter
+export { cookie, sessionStore, getUserFromRequest }

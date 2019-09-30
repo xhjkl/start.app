@@ -7,8 +7,9 @@
     "start": "ts-node --transpile-only --require='dotenv/config' src/main.tsx",
     "lint": "eslint src/**/*.{ts,tsx}",
     "build": "yarn build-back && yarn build-front",
-    "build-front": "parcel build src/client/main.tsx --out-dir build/public --out-file app",
-    "build-back": "tsc --outDir build --target 'ESNEXT' --module 'commonjs'",
+    "watch-front": "parcel watch src/page/start.tsx --out-dir static --out-file app",
+    "build-front": "parcel build src/page/start.tsx --out-dir static --out-file app",
+    "build-back": "tsc --outDir .build --target 'ESNEXT' --module 'commonjs'",
     "test": "jest",
     "coverage": "jest --coverage"
   },
@@ -17,7 +18,8 @@
     "url": "."
   },
   "keywords": [
-    "template", "scaffold"
+    "template",
+    "scaffold"
   ],
   "dependencies": {
     "babel-core": "*",
@@ -102,7 +104,9 @@
     ]
   },
   "standard": {
-    "env": ["jest"],
+    "env": [
+      "jest"
+    ],
     "parser": "@typescript-eslint/parser",
     "plugins": [
       "@typescript-eslint/eslint-plugin"
@@ -114,31 +118,31 @@
   "devDependencies": {
     "@types/cookie-parser": "*",
     "@types/dotenv": "*",
-    "@types/express-session": "*",
     "@types/express": "*",
+    "@types/express-session": "*",
     "@types/jest": "*",
     "@types/node": "*",
     "@types/passport-github": "*",
     "@types/passport-twitter": "*",
     "@types/pg": "*",
-    "@types/react-dom": "*",
     "@types/react": "*",
+    "@types/react-dom": "*",
     "@types/ws": "*",
     "@typescript-eslint/eslint-plugin": "*",
     "@typescript-eslint/parser": "*",
+    "eslint": "*",
     "eslint-config-standard": "*",
     "eslint-plugin-import": "*",
     "eslint-plugin-node": "*",
     "eslint-plugin-promise": "*",
     "eslint-plugin-react": "*",
     "eslint-plugin-standard": "*",
-    "eslint": "*",
     "jest": "*",
     "standard": "*",
     "ts-jest": "*",
     "ts-node": "*",
-    "tslint-config-standard": "*",
     "tslint": "*",
+    "tslint-config-standard": "*",
     "typescript": "*"
   }
 }

@@ -1,5 +1,5 @@
 --
--- Feed this to a fresh installation of Postgres
+-- Feed this to a fresh installation of Postgres.
 --
 
 create extension if not exists "uuid-ossp";

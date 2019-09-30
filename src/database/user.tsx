@@ -1,9 +1,9 @@
 import { pool, dbFailure } from './common'
+import { Pool } from 'pg' // eslint-disable-line no-unused-vars
 
 /** Create an empty user record and return its id. */
-export const makeUser = (client) => {
-  client = client || pool
-  return client.query(
+export const makeUser = (q: Pick<Pool, 'query'> = pool) => {
+  return q.query(
     'insert into "user" default values returning "user_id"'
   ).then(
     ({ rows }) => rows[0].user_id,
@@ -121,9 +121,8 @@ export const mergeUsers = async function ({ keepUid, removeUid }) {
     )
   }
 
-  // We want to pretend that all sessions on behalf of merged-from user belong to merged-into user
+  // Make it so that all the sessions on behalf of the merged-from user belong to the merged-into user.
   const replacedSessionData = { passport: { user: keepUid } }
-
   await client.query(
     `
       update "session"

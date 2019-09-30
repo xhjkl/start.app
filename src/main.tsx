@@ -7,27 +7,25 @@ import * as http from 'http'
 import * as express from 'express'
 
 import * as db from './database'
-import auth from './server/auth'
+import createAuthRouter, { cookie, sessionStore, getUserFromRequest } from './server/auth'
 import attachWebsocketEndpoint from './server/websocket'
 
 import serveComponent from './server/serve-component'
 
-import Root from './component/root'
-import Frame from './component/frame'
+import Root from './component/Root'
+import Frame from './component/Frame'
 
 const StaticDir = 'static'
-const BuildDir = 'build'
 
 const app = express()
 app.disable('x-powered-by')
 
-app.use(express.static(path.resolve(__dirname, '..', '..', StaticDir)))
-app.use(express.static(path.resolve(__dirname, '..', '..', BuildDir)))
+app.use(express.static(path.resolve(__dirname, '..', StaticDir)))
 
-auth.setRoutes(app)
+app.use(createAuthRouter())
 
-app.get('/', (req, res) => {
-  const user = (req.session.passport && req.session.passport.user) || null
+app.get('/', (req: any, res: any) => {
+  const user = getUserFromRequest(req)
 
   serveComponent(
     res,
@@ -36,10 +34,10 @@ app.get('/', (req, res) => {
   )
 })
 
-app.use((req, res) => {
+app.use((_req, res) => {
   res.status(404).sendFile(
     'notfound.html',
-    { root: path.resolve(__dirname, '..', '..', 'src', 'client') }
+    { root: path.resolve(__dirname, 'page') }
   )
 })
 
@@ -47,12 +45,12 @@ const server = http.createServer(app)
 attachWebsocketEndpoint({
   db,
   server,
-  cookie: auth.cookie,
-  sessionStore: auth.sessionStore
+  cookie,
+  sessionStore
 })
 
 // Go.
-db.check((error) => {
+db.check((error: Error) => {
   if (error != null) {
     console.error(error)
     process.exit(3)
